@@ -59,6 +59,7 @@ public class CloudController : MonoBehaviour
         if (Vector3.Distance(m_cloud.position, point) < 1f)
         {
             m_isMove = false;
+            m_system.Play();
         }
     }
 

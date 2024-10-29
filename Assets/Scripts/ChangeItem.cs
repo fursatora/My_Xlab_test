@@ -13,7 +13,7 @@ public class ChangeItem : MonoBehaviour
 
     public void Change()
     {
-        Debug.Log("Ch");
+       
         var index = Random.Range(0, tools.Length);
         for (int i = 0; i < tools.Length; i++)
         {
