@@ -7,3 +7,5 @@ Temp
 UserSettings
 Assembly-CSharp.csproj
 My_Xlab_test.sln
+.vs
+obj

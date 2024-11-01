@@ -1,61 +1,44 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+namespace Golf
 {
-    [SerializeField]
-    private FreeCamera freeCamera;
-    public GameObject ui;
-    public StoneSpawner stoneSpawner;
-    public CloudController cloudController;
-    public ToolsChangerController toolsChangerController;
-
-    private void Update()
+    public class PlayerController : MonoBehaviour
     {
-        if (ui.activeSelf)
-        {
-            return;
-        }
+        public Transform stick;
+        public float maxAngle = 30;
+        public float speed = 1f*100; 
 
-        if (freeCamera!=null)
-        {
-            freeCamera.Move();
-        }
+        private bool isMouseHeld = false;
 
-
-        if(stoneSpawner != null)
+        private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.X))
+            Vector3 angle = stick.localEulerAngles;
+
+            if (Input.GetMouseButton(0))
             {
-                stoneSpawner.Spawn();
+                angle.z += speed * Time.deltaTime;
+                if (angle.z > maxAngle)
+                {
+                    angle.z = maxAngle;
+                }
             }
-
-        }
-
-        if(cloudController != null)
-        {
-            if (Input.GetKeyDown(KeyCode.Z))
+            else
             {
-                cloudController.MoveNext();
+                if (angle.z > 0)
+                {
+                    angle.z -= speed * Time.deltaTime;
+                    if (angle.z < 0) angle.z = 0;
+                }
+                else if (angle.z < 0)
+                {
+                    angle.z += speed * Time.deltaTime;
+                    if (angle.z > 0) angle.z = 0;
+                }
             }
+            Debug.Log(angle.z);
 
+            stick.localEulerAngles = angle;
         }
-
-        if(toolsChangerController != null)
-        {
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                toolsChangerController.Change();
-            }
-
-        }
-
-    }
-
-    private void MoveCamera()
-    {
-        
-
     }
 }
