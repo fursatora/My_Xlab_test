@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3897421087346181648}
   - component: {fileID: 790101895639559437}
   - component: {fileID: 7834278924827228909}
+  - component: {fileID: -4098215551935180176}
   m_Layer: 0
   m_Name: stone3
   m_TagString: Untagged
@@ -111,7 +112,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!64 &7834278924827228909
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -134,3 +135,16 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: 455995b8866658b42b3da7b1cab18535, type: 3}
+--- !u!114 &-4098215551935180176
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1061175026952654461}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae4dcf1a461a640fda64bb25b4685fec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isDirty: 0
