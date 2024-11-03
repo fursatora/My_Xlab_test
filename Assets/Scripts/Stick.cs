@@ -14,9 +14,10 @@ namespace Golf
         public float power = 1f;
         public Transform point;
         public event System.Action onCollisionStone;
+        public event System.Action onCollisionChicken;
 
         private Vector3 m_lastPointPosition;
-        private Vector3 m_dir;
+        private Vector3 m_dir; //не работает
         private bool m_isDown = false;
         private Rigidbody m_rigidbody;
         
@@ -29,12 +30,12 @@ namespace Golf
 
         public void Down()
         {
-            m_isDown = false;
+            m_isDown = true;
         }
 
         public void Up()
         {
-            m_isDown = true;
+            m_isDown = false;
         }
 
         private void Update()
@@ -59,15 +60,20 @@ namespace Golf
 
         private void OnCollisionEnter(Collision other)
         {
-            Debug.Log(other.gameObject.GetComponent<Stone>(), other.gameObject);
-            if(other.gameObject.TryGetComponent<Stone> (out var stone) && !stone.isDirty)
+            if (other.gameObject.TryGetComponent<Stone>(out var stone) && !stone.isDirty)
             {
                 stone.isDirty = true;
                 var contact = other.contacts[0];
-                other.rigidbody.AddForce(m_dir * power, ForceMode.Impulse);
+                other.rigidbody.AddForce(-contact.normal * power, ForceMode.Impulse);
                 onCollisionStone?.Invoke();
             }
-
+            /*else if (other.gameObject.TryGetComponent<Chicken>(out var chicken) && !chicken.isDirty)
+            {
+                chicken.isDirty = true;
+                var contact = other.contacts[0];
+                other.rigidbody.AddForce(-contact.normal * power, ForceMode.Impulse);
+                onCollisionChicken?.Invoke();
+            }*/
         }
 
     }

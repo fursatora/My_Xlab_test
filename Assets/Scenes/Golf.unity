@@ -2002,11 +2002,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5bb6c925bf695c24f8693d0c9292d54e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_point: {fileID: 248693406}
-  m_prefabs:
-  - {fileID: 1061175026952654461, guid: e8d2f4d40531f4389930821bb02028e5, type: 3}
-  - {fileID: 4106579848546224466, guid: a6d387ecb031b49bdb8a217584671fc2, type: 3}
+  m_point: {fileID: 0}
+  m_stonePrefabs:
   - {fileID: 7825066426648726902, guid: 26ad0547bb0b34c429ab1e26803c9ca3, type: 3}
+  - {fileID: 4106579848546224466, guid: a6d387ecb031b49bdb8a217584671fc2, type: 3}
+  - {fileID: 1061175026952654461, guid: e8d2f4d40531f4389930821bb02028e5, type: 3}
+  m_chickenPrefabs:
+  - {fileID: 5580732887509082314, guid: b1f0f3d2617944a8b82ef162e5246d35, type: 3}
+  - {fileID: 7110756746959466243, guid: 22708897c905d4bcb8273799e09c9bcd, type: 3}
 --- !u!1001 &269828714
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13836,7 +13839,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stick: {fileID: 1986242452}
-  stoneSpawner: {fileID: 248693407}
+  stoneSpawner: {fileID: 0}
   m_delay: 2
 --- !u!4 &1596482678
 Transform:

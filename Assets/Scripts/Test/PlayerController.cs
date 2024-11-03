@@ -30,7 +30,7 @@ namespace Test
             {
                 if (Input.GetKeyDown(KeyCode.X))
                 {
-                    stoneSpawner.Spawn();
+                    stoneSpawner.SpawnStone();
                 }
 
             }
