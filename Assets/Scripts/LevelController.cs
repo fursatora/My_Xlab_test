@@ -77,44 +77,25 @@ namespace Golf
         {
             m_score++;
             Debug.Log($"score: {m_score}");
-
-            for (int i = m_stones.Count - 1; i >= 0; i--)
-            {
-                var stone = m_stones[i];
-                DestroyAfterDelay.DestroyObject<Stone>(stone.gameObject, m_destroyDelay, m_stones);
-            }
+            DestroyAfterDelay.DestroyObjectsInList(m_stones, m_destroyDelay);
         }
 
         private void OnCollisionChickenHit()
         {
             m_score--;
             Debug.Log($"score: {m_score}");
-
-            for (int i = m_chickens.Count - 1; i >= 0; i--)
-            {
-                var chicken = m_chickens[i];
-                DestroyAfterDelay.DestroyObject<Chicken>(chicken.gameObject, m_destroyDelay, m_chickens);
-            }
+            DestroyAfterDelay.DestroyObjectsInList(m_chickens, m_destroyDelay);
         }
 
         private void OnCollisionStone()
         {
             Debug.Log("GAME OVER!!!!");
-            for (int i = m_stones.Count - 1; i >= 0; i--)
-            {
-                var stone = m_stones[i];
-                DestroyAfterDelay.DestroyObject<Stone>(stone.gameObject, m_destroyDelay, m_stones);
-            }
+            DestroyAfterDelay.DestroyObjectsInList(m_stones, m_destroyDelay);
         }
 
         private void OnCollisionChicken()
         {
-            for (int i = m_chickens.Count - 1; i >= 0; i--)
-            {
-                var chicken = m_chickens[i];
-                DestroyAfterDelay.DestroyObject<Chicken>(chicken.gameObject, m_destroyDelay, m_chickens);
-            }
-
+            DestroyAfterDelay.DestroyObjectsInList(m_chickens, m_destroyDelay);
         }
     }
 }
