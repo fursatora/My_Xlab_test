@@ -19,6 +19,18 @@ namespace Golf
             if (other.gameObject.GetComponent<Chicken>())
             {
                 onCollisionChicken?.Invoke();
+                var levelController = FindObjectOfType<LevelController>();
+            if (levelController != null)
+            {
+                if (gameObject.name.Contains("duck"))
+                {
+                    levelController.PlaySound(levelController.duckSound);
+                }
+                else if (gameObject.name.Contains("chicken"))
+                {
+                    levelController.PlaySound(levelController.chickenSound);
+                }
+            }
             }
         }
     }

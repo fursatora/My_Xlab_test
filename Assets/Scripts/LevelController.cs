@@ -13,11 +13,15 @@ namespace Golf
         [SerializeField] private float m_delay = 2f;
         [SerializeField] private float  m_destroyDelay = 1f;
         [SerializeField] private float  m_chickenProbabiluty;
+        [SerializeField] private int  m_life=3;
+        public AudioSource audioSource;
+        public AudioClip chickenSound;
+        public AudioClip duckSound;
 
 
 
         private uint m_score = 0;
-
+        
         private List<Stone> m_stones = new List<Stone>();
         private List<Chicken> m_chickens = new List<Chicken>();
 
@@ -62,7 +66,7 @@ namespace Golf
                     var stone = go.GetComponent<Stone>();
                     stone.onCollisionStone += OnCollisionStone;
                     m_stones.Add(stone);
-                    Debug.Log($"колво камней: {m_stones.Count}");
+                    //Debug.Log($"колво камней: {m_stones.Count}");
                 }
                 else if (go.GetComponent<Chicken>() != null)
                 {
@@ -82,20 +86,41 @@ namespace Golf
 
         private void OnCollisionChickenHit()
         {
-            m_score--;
-            Debug.Log($"score: {m_score}");
+            if (m_life>1){
+                m_life--;
+                Debug.Log($"life: {m_life}");
+            }
+            else
+            {
+                Debug.Log("GAME OVER!!!!");
+            }
             DestroyAfterDelay.DestroyObjectsInList(m_chickens, m_destroyDelay);
         }
 
         private void OnCollisionStone()
         {
-            Debug.Log("GAME OVER!!!!");
+            if (m_life>1){
+                m_life--;
+                Debug.Log($"life: {m_life}");
+            }
+            else 
+            {
+                Debug.Log("GAME OVER!!!!");
+            }
             DestroyAfterDelay.DestroyObjectsInList(m_stones, m_destroyDelay);
         }
 
         private void OnCollisionChicken()
         {
             DestroyAfterDelay.DestroyObjectsInList(m_chickens, m_destroyDelay);
+        }
+
+        public void PlaySound(AudioClip clip)
+        {
+            if (audioSource != null && clip != null)
+            {
+                audioSource.PlayOneShot(clip);
+            }
         }
     }
 }
