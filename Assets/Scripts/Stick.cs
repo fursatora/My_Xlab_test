@@ -67,13 +67,13 @@ namespace Golf
                 other.rigidbody.AddForce(-contact.normal * power, ForceMode.Impulse);
                 onCollisionStone?.Invoke();
             }
-            /*else if (other.gameObject.TryGetComponent<Chicken>(out var chicken) && !chicken.isDirty)
+            else if (other.gameObject.TryGetComponent<Chicken>(out var chicken) && !chicken.isDirty)
             {
                 chicken.isDirty = true;
                 var contact = other.contacts[0];
                 other.rigidbody.AddForce(-contact.normal * power, ForceMode.Impulse);
                 onCollisionChicken?.Invoke();
-            }*/
+            }
         }
 
     }
