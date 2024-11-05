@@ -9,23 +9,27 @@ namespace Golf
     {
         public Stick stick;
         public StoneSpawner stoneSpawner;
+        public MusicController musicController;
         private float m_timer;
         [SerializeField] private float m_delay = 2f;
-        [SerializeField] private float  m_destroyDelay = 1f;
-        [SerializeField] private float  m_chickenProbabiluty;
-        [SerializeField] private int  m_life=3;
-        public AudioSource audioSource;
-        public AudioClip chickenSound;
-        public AudioClip duckSound;
+        [SerializeField] private float m_destroyDelay = 1f;
+        [SerializeField] private float m_chickenProbabiluty;
+        [SerializeField] private int m_life = 3;
+        
+
 
 
 
         private uint m_score = 0;
-        
+
         private List<Stone> m_stones = new List<Stone>();
         private List<Chicken> m_chickens = new List<Chicken>();
 
 
+        public void Awake()
+        {
+            musicController.PlayBackgroundMusic();
+        }
         public void OnEnable()
         {
             m_timer = Time.time - m_delay;
@@ -86,7 +90,8 @@ namespace Golf
 
         private void OnCollisionChickenHit()
         {
-            if (m_life>1){
+            if (m_life > 1)
+            {
                 m_life--;
                 Debug.Log($"life: {m_life}");
             }
@@ -94,16 +99,25 @@ namespace Golf
             {
                 Debug.Log("GAME OVER!!!!");
             }
+            if (UnityEngine.Random.value < 0.5f)
+            {
+                musicController.PlayChickenSound();
+            }
+            else
+            {
+                musicController.PlayDuckSound();
+            }
             DestroyAfterDelay.DestroyObjectsInList(m_chickens, m_destroyDelay);
         }
 
         private void OnCollisionStone()
         {
-            if (m_life>1){
+            if (m_life > 1)
+            {
                 m_life--;
                 Debug.Log($"life: {m_life}");
             }
-            else 
+            else
             {
                 Debug.Log("GAME OVER!!!!");
             }
@@ -113,14 +127,6 @@ namespace Golf
         private void OnCollisionChicken()
         {
             DestroyAfterDelay.DestroyObjectsInList(m_chickens, m_destroyDelay);
-        }
-
-        public void PlaySound(AudioClip clip)
-        {
-            if (audioSource != null && clip != null)
-            {
-                audioSource.PlayOneShot(clip);
-            }
         }
     }
 }

@@ -4,14 +4,41 @@ namespace Golf
 {
     public class MusicController : MonoBehaviour
     {
-        private AudioSource audioSource;
+        [SerializeField] private AudioSource audioSourceBackground;
+        [SerializeField] private AudioSource audioSourceAnimalSounds;
+
+        [SerializeField] private AudioClip chickenSound;
+        [SerializeField] private AudioClip duckSound;
+        [SerializeField] private AudioClip music;
 
         private void Awake()
         {
-            audioSource = GetComponent<AudioSource>();
-            if (audioSource != null && !audioSource.isPlaying)
+            audioSourceBackground = GetComponent<AudioSource>();
+            audioSourceAnimalSounds = GetComponent<AudioSource>();
+
+        }
+
+        public void PlayChickenSound()
+        {
+            PlayAudioClip(chickenSound,audioSourceAnimalSounds);
+        }
+
+        public void PlayDuckSound()
+        {
+            PlayAudioClip(duckSound,audioSourceAnimalSounds);
+        }
+
+        public void PlayBackgroundMusic()
+        {
+            PlayAudioClip(music,audioSourceBackground);
+        }
+
+        private void PlayAudioClip(AudioClip clip, AudioSource audioSource)
+        {
+            if (audioSource != null)
             {
-                audioSource.Play(); 
+                audioSource.clip = clip;
+                audioSource.Play();
             }
         }
     }
