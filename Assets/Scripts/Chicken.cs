@@ -9,6 +9,7 @@ namespace Golf
     {
         public event Action onCollisionChicken;
         public bool isDirty =false;
+        public static bool hasCollidedWithGround = false;
         private void OnCollisionEnter(Collision other)
         {
             if (isDirty)
@@ -16,8 +17,10 @@ namespace Golf
                 return;
             }
 
-            if (other.gameObject.GetComponent<Chicken>())
+            if (other.gameObject.TryGetComponent<Chicken>(out var chicken))
             {
+                chicken.isDirty = true;
+                hasCollidedWithGround=true;
                 onCollisionChicken?.Invoke();
                 var levelController = FindObjectOfType<LevelController>();
              

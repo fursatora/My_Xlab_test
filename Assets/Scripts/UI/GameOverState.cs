@@ -6,16 +6,39 @@ namespace Golf
 {
     public class GameOverState : MonoBehaviour
     {
-        // Start is called before the first frame update
-        void Start()
+        public GameObject rootUI;
+        public MainMenuState mainMenuState;
+        public GamePlayState gamePlayState;
+        public MusicController musicController;
+
+        private void OnEnable()
         {
-        
+            rootUI.SetActive(true);
+            musicController.PlayGameoverSound();
+
         }
 
-        // Update is called once per frame
-        void Update()
+        private void OnDisable()
         {
-        
+            if (rootUI)
+            {
+                rootUI.SetActive(false);
+
+            }
+        }
+       
+
+        public void Restart()
+        {
+            gameObject.SetActive(false);
+            gamePlayState.gameObject.SetActive(true);
+
+        }
+
+        public void BackToMenu()
+        {
+            gameObject.SetActive(false);
+            mainMenuState.gameObject.SetActive(true);
         }
     }
 }

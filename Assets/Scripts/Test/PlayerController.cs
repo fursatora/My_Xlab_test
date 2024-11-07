@@ -54,11 +54,5 @@ namespace Test
             }
 
         }
-
-        private void MoveCamera()
-        {
-
-
-        }
     }
 }

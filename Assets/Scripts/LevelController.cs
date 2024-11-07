@@ -11,39 +11,59 @@ namespace Golf
         public StoneSpawner stoneSpawner;
         public MusicController musicController;
         private float m_timer;
-        [SerializeField] private float m_delay = 2f;
+        [SerializeField] private static float m_delay = 2f;
+        [SerializeField] private float m_minDelay = 0.5f;  
+        [SerializeField] private float m_delayDecreaseRate = 0.01f; 
+     
+
         [SerializeField] private float m_destroyDelay = 1f;
-        [SerializeField] private float m_chickenProbabiluty;
-        [SerializeField] private int m_life = 3;
+        [SerializeField] private float m_chickenProbabiluty; 
+
+        public event Action<int> onGameOver;
+        public event Action<int> onScoreInc;
         
 
 
 
 
-        private uint m_score = 0;
+        private int m_score = 0;
+        private int m_life = 3;
+        private float m_initialDelay=m_delay;
 
         private List<Stone> m_stones = new List<Stone>();
         private List<Chicken> m_chickens = new List<Chicken>();
 
 
-        public void Awake()
-        {
-            musicController.PlayBackgroundMusic();
-        }
+    
         public void OnEnable()
         {
             m_timer = Time.time - m_delay;
             stick.onCollisionStone += OnCollisionStoneHit;
             stick.onCollisionChicken += OnCollisionChickenHit;
+
+            m_score =0;
+            m_life=3;
+            m_delay=m_initialDelay;
+            ClearStones();
         }
 
-        private void OnDisable()
+        public void OnDisable()
         {
             if (stick)
             {
                 stick.onCollisionStone -= OnCollisionStoneHit;
                 stick.onCollisionChicken -= OnCollisionChickenHit;
             }
+        }
+
+        private void ClearStones()
+        {
+            foreach (var stone in m_stones)
+            {
+                Destroy(stone.gameObject);
+            }
+            m_stones.Clear();
+
         }
 
         private void Update()
@@ -78,13 +98,22 @@ namespace Golf
                     chicken.onCollisionChicken += OnCollisionChicken;
                     m_chickens.Add(chicken);
                 }
+                if (m_delay > m_minDelay)
+                {
+                    m_delay -= m_delayDecreaseRate;
+                }                
             }
         }
 
         private void OnCollisionStoneHit()
         {
-            m_score++;
+           
+                 m_score++;
             Debug.Log($"score: {m_score}");
+            onScoreInc?.Invoke(m_score);
+            
+           
+            musicController.PlayStoneSound();
             DestroyAfterDelay.DestroyObjectsInList(m_stones, m_destroyDelay);
         }
 
@@ -92,12 +121,14 @@ namespace Golf
         {
             if (m_life > 1)
             {
-                m_life--;
+                 m_life--;
                 Debug.Log($"life: {m_life}");
+                
             }
-            else
+            else 
             {
                 Debug.Log("GAME OVER!!!!");
+                onGameOver?.Invoke(m_score);
             }
             if (UnityEngine.Random.value < 0.5f)
             {
@@ -107,7 +138,7 @@ namespace Golf
             {
                 musicController.PlayDuckSound();
             }
-            DestroyAfterDelay.DestroyObjectsInList(m_chickens, m_destroyDelay);
+            DestroyAfterDelay.DestroyObjectsInList(m_chickens, 0.1f);
         }
 
         private void OnCollisionStone()
@@ -120,8 +151,9 @@ namespace Golf
             else
             {
                 Debug.Log("GAME OVER!!!!");
+                onGameOver?.Invoke(m_score);
             }
-            DestroyAfterDelay.DestroyObjectsInList(m_stones, m_destroyDelay);
+            DestroyAfterDelay.DestroyObjectsInList(m_stones, 0.5f*m_destroyDelay);
         }
 
         private void OnCollisionChicken()
