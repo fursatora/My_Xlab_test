@@ -21,6 +21,7 @@ namespace Golf
 
         public event Action<int> onGameOver;
         public event Action<int> onScoreInc;
+        public event Action<int> onLifeLost;
         
 
 
@@ -123,6 +124,7 @@ namespace Golf
             {
                  m_life--;
                 Debug.Log($"life: {m_life}");
+                onLifeLost?.Invoke(m_life);
                 
             }
             else 
@@ -147,6 +149,7 @@ namespace Golf
             {
                 m_life--;
                 Debug.Log($"life: {m_life}");
+                onLifeLost?.Invoke(m_life);
             }
             else
             {

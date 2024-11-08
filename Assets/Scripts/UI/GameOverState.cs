@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using TMPro;
 namespace Golf
 {
     public class GameOverState : MonoBehaviour
@@ -10,6 +10,9 @@ namespace Golf
         public MainMenuState mainMenuState;
         public GamePlayState gamePlayState;
         public MusicController musicController;
+
+        public TextMeshProUGUI currentScoreText;
+        public TextMeshProUGUI bestScoreText;
 
         private void OnEnable()
         {
@@ -26,7 +29,12 @@ namespace Golf
 
             }
         }
-       
+
+        public void SetScore(int currentScore, int bestScore)
+        {
+            currentScoreText.text = $"Current score: {currentScore}";
+            bestScoreText.text = $"Best score: {bestScore}";
+        }
 
         public void Restart()
         {

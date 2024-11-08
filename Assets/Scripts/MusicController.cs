@@ -19,21 +19,26 @@ namespace Golf
 
         public void PlayChickenSound()
         {
+            if (!gameObject.activeInHierarchy || !audioSourceBackground.isActiveAndEnabled) return;
             PlayAudioClip(chickenSound, audioSourceAnimalSounds);
         }
 
         public void PlayDuckSound()
         {
+            if (!gameObject.activeInHierarchy || !audioSourceBackground.isActiveAndEnabled) return;
             PlayAudioClip(duckSound, audioSourceAnimalSounds);
         }
 
         public void PlayStoneSound()
         {
+            if (!gameObject.activeInHierarchy || !audioSourceBackground.isActiveAndEnabled) return;
             PlayAudioClip(stoneSound, audioSourceAnimalSounds);
         }
 
         public void PlayBackgroundMusic()
         {
+            if (!gameObject.activeInHierarchy || !audioSourceBackground.isActiveAndEnabled) return;
+
             double firstStartTime = AudioSettings.dspTime;
             audioSourceBackground.loop = false;
             PlayAudioClip(music, audioSourceBackground, firstStartTime);
@@ -63,6 +68,7 @@ namespace Golf
         }
         public void PlayGameoverSound()
         {
+            if (!gameObject.activeInHierarchy || !audioSourceBackground.isActiveAndEnabled) return;
             PlayAudioClip(musicGameOver, audioSourceGameOver);
         }
 
