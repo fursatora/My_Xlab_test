@@ -19029,7 +19029,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1593888791
 RectTransform:
   m_ObjectHideFlags: 0
@@ -19349,7 +19349,7 @@ MonoBehaviour:
   scoreText: {fileID: 564884593}
   musicController: {fileID: 694988860}
   musicOnButton: {fileID: 752258435}
-  musicOffButton: {fileID: 0}
+  musicOffButton: {fileID: 189684215}
   playBtn: {fileID: 1577959671}
 --- !u!1001 &1619387526
 PrefabInstance:
