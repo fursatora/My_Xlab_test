@@ -22,6 +22,7 @@ namespace Golf
             rootUI.SetActive(true);
             playerController.enabled = true;
             levelController.enabled = true;
+            
             musicController.PlayBackgroundMusic();
             musicController.StopSound(musicController.audioSourceGameOver);
 
@@ -69,7 +70,7 @@ namespace Golf
             gameObject.SetActive(false);
 
             gameOverState.SetScore(score, bestScore);
-            
+
             gameOverState.gameObject.SetActive(true);
         }
 

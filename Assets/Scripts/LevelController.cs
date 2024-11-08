@@ -28,7 +28,7 @@ namespace Golf
 
 
         private int m_score = 0;
-        private int m_life = 3;
+        private int m_life = 100;
         private float m_initialDelay=m_delay;
 
         private List<Stone> m_stones = new List<Stone>();
@@ -109,7 +109,7 @@ namespace Golf
         private void OnCollisionStoneHit()
         {
            
-                 m_score++;
+            m_score++;
             Debug.Log($"score: {m_score}");
             onScoreInc?.Invoke(m_score);
             
