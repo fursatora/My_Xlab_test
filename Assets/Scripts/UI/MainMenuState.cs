@@ -13,7 +13,6 @@ namespace Golf
         public GamePlayState gamePlayState;
         public SettingsState settingsState;
         public InformationState informationState;
-
         public TextMeshProUGUI scoreText;
 
         public SoundController soundController;
@@ -22,6 +21,7 @@ namespace Golf
         public Button playBtn;
         public Button settingsBtn;
         public Button informationButton;
+        public Button secretBtn;
 
         private void OnEnable()
         {
@@ -49,17 +49,15 @@ namespace Golf
 
         public void Settings()
         {
-            
+
             this.gameObject.SetActive(false);
-            settingsState.gameObject.SetActive(true); 
+            settingsState.gameObject.SetActive(true);
         }
 
         public void Information()
         {
             this.gameObject.SetActive(false);
-            informationState.gameObject.SetActive(true); 
+            informationState.gameObject.SetActive(true);
         }
-
-
     }
 }
