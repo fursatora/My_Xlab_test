@@ -25,6 +25,15 @@ namespace Golf
             
         }
 
+        private void OnEnable()
+        {
+            if (stick != null)
+            {
+                stick.Reset();
+            }
+        }
+
+
         public void PointerDown()
         {
             stick.Down();

@@ -39,9 +39,9 @@ namespace Golf
             m_isDown = false;
         }
 
-        private void Update()
+       public void Reset()
         {
-
+            m_isDown = false;
         }
 
         private void FixedUpdate()

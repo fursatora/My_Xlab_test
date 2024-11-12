@@ -9,17 +9,19 @@ namespace Golf
     public class MainMenuState : MonoBehaviour
     {
         public GameObject rootUI;
+
         public GamePlayState gamePlayState;
         public SettingsState settingsState;
+        public InformationState informationState;
+
         public TextMeshProUGUI scoreText;
+
         public SoundController soundController;
         public MusicController musicController;
 
-        public Button musicOnButton;  
-        public Button musicOffButton; 
-
         public Button playBtn;
         public Button settingsBtn;
+        public Button informationButton;
 
         private void OnEnable()
         {
@@ -51,5 +53,13 @@ namespace Golf
             this.gameObject.SetActive(false);
             settingsState.gameObject.SetActive(true); 
         }
+
+        public void Information()
+        {
+            this.gameObject.SetActive(false);
+            informationState.gameObject.SetActive(true); 
+        }
+
+
     }
 }
