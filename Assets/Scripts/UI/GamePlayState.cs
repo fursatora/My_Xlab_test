@@ -12,6 +12,7 @@ namespace Golf
         public GameObject rootUI;
         public PlayerController playerController;
         public MusicController musicController;
+        public SoundController soundController;
         public LevelController levelController;
         public TextMeshProUGUI scoreText;
 
@@ -24,7 +25,7 @@ namespace Golf
             levelController.enabled = true;
             
             musicController.PlayBackgroundMusic();
-            musicController.StopSound(musicController.audioSourceGameOver);
+            //soundController.StopSound();
 
             levelController.onGameOver += OnGameOver;
             levelController.onScoreInc += OnScoreInc;
@@ -38,13 +39,16 @@ namespace Golf
         {
             if (rootUI)
             {
-                rootUI.SetActive(false);
+                rootUI.gameObject.SetActive(false);
             }
 
             if (playerController)
             {
                 playerController.enabled = false;
-                levelController.musicController.StopBackgroundMusic();
+
+                musicController.StopBackgroundMusic();
+                soundController.StopSound();
+
             }
 
             if (levelController)
@@ -69,9 +73,12 @@ namespace Golf
             GameInstance.score = Mathf.Max(GameInstance.score, score);
             gameObject.SetActive(false);
 
+            soundController.PlayGameOverSound();
+
             gameOverState.SetScore(score, bestScore);
 
             gameOverState.gameObject.SetActive(true);
+
         }
 
         private void ResetHeartsUI()

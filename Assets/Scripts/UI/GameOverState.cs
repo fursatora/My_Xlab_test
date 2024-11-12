@@ -9,7 +9,9 @@ namespace Golf
         public GameObject rootUI;
         public MainMenuState mainMenuState;
         public GamePlayState gamePlayState;
+        public SoundController soundController;
         public MusicController musicController;
+
 
         public TextMeshProUGUI currentScoreText;
         public TextMeshProUGUI bestScoreText;
@@ -17,8 +19,9 @@ namespace Golf
         private void OnEnable()
         {
             rootUI.SetActive(true);
-            musicController.PlayGameoverSound();
 
+            soundController.PlayGameOverSound();
+            musicController.StopBackgroundMusic();
         }
 
         private void OnDisable()
@@ -26,7 +29,7 @@ namespace Golf
             if (rootUI)
             {
                 rootUI.SetActive(false);
-
+                soundController.StopSound();
             }
         }
 

@@ -8,36 +8,35 @@ namespace Golf
 {
     public class MainMenuState : MonoBehaviour
     {
-        public GameObject mainmenuUI;
+        public GameObject rootUI;
         public GamePlayState gamePlayState;
+        public SettingsState settingsState;
         public TextMeshProUGUI scoreText;
+        public SoundController soundController;
         public MusicController musicController;
 
-        
-        public Button musicOnButton;  // Кнопка включения музыки
-        public Button musicOffButton; // Кнопка выключения музыки
- 
+        public Button musicOnButton;  
+        public Button musicOffButton; 
+
         public Button playBtn;
+        public Button settingsBtn;
 
         private void OnEnable()
         {
             playBtn.onClick.AddListener(Play);
+            settingsBtn.onClick.AddListener(Settings);
 
-            musicOnButton.onClick.AddListener(SoundOn);
-            musicOffButton.onClick.AddListener(SoundOff);
-        
-            mainmenuUI.SetActive(true);
-            musicController.StopSound(musicController.audioSourceGameOver);
+            rootUI.SetActive(true);
+            soundController.StopSound();
             scoreText.text = $"Best score: {GameInstance.score}";
         }
 
         private void OnDisable()
         {
-            if (mainmenuUI)
+            if (rootUI)
             {
-                mainmenuUI.SetActive(false);
+                rootUI.SetActive(false);
             }
-
         }
 
         public void Play()
@@ -46,23 +45,11 @@ namespace Golf
             gamePlayState.gameObject.SetActive(true);
         }
 
-        public void SoundOn()
+        public void Settings()
         {
-                musicController.gameObject.SetActive(true);
-                musicOnButton.gameObject.SetActive(false);
-                musicOffButton.gameObject.SetActive(true);
+            
+            this.gameObject.SetActive(false);
+            settingsState.gameObject.SetActive(true); 
         }
-
-        public void SoundOff()
-        {
-                musicController.gameObject.SetActive(false);
-                musicOffButton.gameObject.SetActive(false);
-                musicOnButton.gameObject.SetActive(true);
-        }
-
-
-
-
-
     }
 }

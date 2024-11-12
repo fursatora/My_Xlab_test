@@ -1,96 +1,95 @@
 using UnityEngine;
+using System.Collections;
 
 namespace Golf
 {
     public class MusicController : MonoBehaviour
     {
         [SerializeField] private AudioSource audioSourceBackground;
-        [SerializeField] private AudioSource audioSourceBackgroundLoop;
-        public AudioSource audioSourceGameOver;
-        [SerializeField] private AudioSource audioSourceAnimalSounds;
+        [SerializeField] private AudioClip introMusic;
+        [SerializeField] private AudioClip loopMusic;
 
-        [SerializeField] private AudioClip chickenSound;
-        [SerializeField] private AudioClip duckSound;
-        [SerializeField] private AudioClip stoneSound;
+        private Coroutine switchToLoopCoroutine;
+        private bool isMuted = false;
+        private float currentVolume = 1f; 
 
-        [SerializeField] private AudioClip music;
-        [SerializeField] private AudioClip musicLoop;
-        [SerializeField] private AudioClip musicGameOver;
-
-        public void PlayChickenSound()
+        private void Start()
         {
-            if (!gameObject.activeInHierarchy || !audioSourceBackground.isActiveAndEnabled) return;
-            PlayAudioClip(chickenSound, audioSourceAnimalSounds);
+            audioSourceBackground.volume = currentVolume;
         }
 
-        public void PlayDuckSound()
-        {
-            if (!gameObject.activeInHierarchy || !audioSourceBackground.isActiveAndEnabled) return;
-            PlayAudioClip(duckSound, audioSourceAnimalSounds);
-        }
-
-        public void PlayStoneSound()
-        {
-            if (!gameObject.activeInHierarchy || !audioSourceBackground.isActiveAndEnabled) return;
-            PlayAudioClip(stoneSound, audioSourceAnimalSounds);
-        }
-
+   
         public void PlayBackgroundMusic()
         {
-            if (!gameObject.activeInHierarchy || !audioSourceBackground.isActiveAndEnabled) return;
+            if (isMuted || !gameObject.activeInHierarchy || !audioSourceBackground.isActiveAndEnabled) return;
 
-            double firstStartTime = AudioSettings.dspTime;
-            audioSourceBackground.loop = false;
-            PlayAudioClip(music, audioSourceBackground, firstStartTime);
+            audioSourceBackground.loop = false; 
+            audioSourceBackground.clip = introMusic;
+            audioSourceBackground.Play();
 
-
-            double seconStartTime = AudioSettings.dspTime + music.length;
-            audioSourceBackgroundLoop.loop = true;
-            PlayAudioClip(musicLoop, audioSourceBackgroundLoop, seconStartTime);
+            switchToLoopCoroutine = StartCoroutine(SwitchToLoop());
         }
 
-        public void StopSound(AudioSource audioSource)
+        private IEnumerator SwitchToLoop()
         {
-            audioSource.Stop();
+            yield return new WaitForSeconds(introMusic.length);
+
+            audioSourceBackground.clip = loopMusic;
+            audioSourceBackground.loop = true;
+            audioSourceBackground.Play();
         }
 
         public void StopBackgroundMusic()
         {
+            if (switchToLoopCoroutine != null)
+            {
+                StopCoroutine(switchToLoopCoroutine);
+                switchToLoopCoroutine = null;
+            }
+
             if (audioSourceBackground.isPlaying)
             {
                 audioSourceBackground.Stop();
-            }
-
-            if (audioSourceBackgroundLoop.isPlaying)
-            {
-                audioSourceBackgroundLoop.Stop();
+                audioSourceBackground.clip = null;
             }
         }
-        public void PlayGameoverSound()
+
+        public void PlayMusic()
         {
-            if (!gameObject.activeInHierarchy || !audioSourceBackground.isActiveAndEnabled) return;
-            PlayAudioClip(musicGameOver, audioSourceGameOver);
-        }
-
-        private void PlayAudioClip(AudioClip clip, AudioSource audioSource)
-        {
-            if (audioSource != null)
+            if (!isMuted)
             {
-                audioSource.clip = clip;
-                audioSource.Play();
+                PlayBackgroundMusic();
             }
         }
 
-        private void PlayAudioClip(AudioClip clip, AudioSource audioSource, double startTime)
+        public void StopMusic()
         {
-            if (audioSource != null)
-            {
-                audioSource.clip = clip;
-                audioSource.PlayScheduled(startTime);
-            }
-
+            StopBackgroundMusic();
         }
 
+        public void SetVolume(int volumeIndex)
+        {
+            volumeIndex = Mathf.Clamp(volumeIndex, 0, 5);
 
+            float[] volumeLevels = { 0f, 0.2f, 0.4f, 0.6f, 0.8f, 1f };
+            currentVolume = volumeLevels[volumeIndex];
+
+            if (!isMuted)
+                audioSourceBackground.volume = currentVolume; 
+        }
+
+        public void ToggleMute()
+        {
+            isMuted = !isMuted;
+
+            if (isMuted)
+            {
+                audioSourceBackground.volume = 0; 
+            }
+            else
+            {
+                audioSourceBackground.volume = currentVolume; 
+            }
+        }
     }
 }
